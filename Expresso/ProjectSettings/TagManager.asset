@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - GroundState
+  - Points
+  - Coffee
+  - Vending
   layers:
   - Default
   - TransparentFX

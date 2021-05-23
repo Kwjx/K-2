@@ -56,10 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\PlayerScripts\Player_Anim.cs" />
+    <Compile Include="Assets\Script\Objects\Points.cs" />
     <Compile Include="Assets\Script\PlayerScripts\PlayerCollision.cs" />
+    <Compile Include="Assets\Script\PlayerScripts\CoffeeBar.cs" />
+    <Compile Include="Assets\Script\PlayerScripts\PlayerAbilityState.cs" />
     <Compile Include="Assets\Script\PlayerScripts\GroundState.cs" />
     <Compile Include="Assets\Script\PlayerScripts\Player.cs" />
-    <Compile Include="Assets\Script\PlayerScripts\PlayerAbilityState.cs" />
+    <Compile Include="Assets\Script\Objects\Vending.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -599,6 +602,9 @@
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Animation.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Runtime.dll</HintPath>
     </Reference>
@@ -659,6 +665,9 @@
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
     </Reference>
@@ -676,12 +685,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>Library\ScriptAssemblies\Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>Library\ScriptAssemblies\com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

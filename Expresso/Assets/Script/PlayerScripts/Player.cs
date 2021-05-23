@@ -11,18 +11,27 @@ public class Player : MonoBehaviour
     public float Orispeed;
     public float NewSpeed;
     private float InputSpeed;
+    private float CurrentSpeed; 
     public float m_JumpForce;
+
+    public CoffeeBar m_CoffeeBar;
 
     private float m_JumpHold;
     private float m_JumpTimer;
     private float m_Mass;
     private GameObject Interactable;
 
+    //Points
+    public int m_Score;
+
     //Player Stats
     public int MaxHealth = 100;
     public int currentHealth;
     //public HealthBar m_HealthBar;
 
+    //Coffee
+    public int currentCoffee;
+    public int maxCoffee;
 
     //Check for ground
     private Vector2 m_Force;
@@ -59,10 +68,11 @@ public class Player : MonoBehaviour
     public Vector2 RespawnPos = Vector2.zero;
     private Vector2 startSpawn;
 
-    private GroundState m_GroundState;
+    GroundState m_GroundState;
     //private Player_Anim m_PlayerAnim;
-    private PlayerCollision m_PlayerCollision;
-    private PlayerAbilityState m_PlayerAbilityState;
+    PlayerCollision m_PlayerCollision;
+    PlayerAbilityState m_PlayerAbilityState;
+    CoffeeBar m_Coffee;
 
     //Check key
     public bool hasKey = false;
@@ -81,9 +91,10 @@ public class Player : MonoBehaviour
         m_Mass = m_RB.mass;
         m_Radius = gameObject.GetComponent<CapsuleCollider2D>().size.x / 0.2f;
         m_Offset = gameObject.GetComponent<CapsuleCollider2D>().size.y / 0.2f;
+        m_Coffee = GameObject.Find("Slider").GetComponent<CoffeeBar>();
         m_Offset -= m_Radius;
         currentHealth = MaxHealth;
-        //m_HealthBar.SetMaxHealth(MaxHealth);
+        //m_HealthBar.SetMaxHealth(MaxHealth);0
         startSpawn = this.transform.position;
         InputSpeed = Orispeed;
     }
@@ -199,20 +210,48 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if(m_PlayerAbilityState.abilityActive == PlayerAbilityState.AbilityActive.notActive)
+            if(m_PlayerAbilityState.abilityActive == PlayerAbilityState.AbilityActive.notActive )
             {
-                m_PlayerAbilityState.abilityActive = PlayerAbilityState.AbilityActive.isActive;
-                InputSpeed = NewSpeed;
+                if(m_Coffee.coffee >= 1)
+                {
+                    m_PlayerAbilityState.abilityActive = PlayerAbilityState.AbilityActive.isActive;
+                }
             }
 
             else if(m_PlayerAbilityState.abilityActive == PlayerAbilityState.AbilityActive.isActive)
             {
                 m_PlayerAbilityState.abilityActive = PlayerAbilityState.AbilityActive.notActive;
-                InputSpeed = Orispeed;
             }
         }
     }
 
+    public void CheckSpeed()
+    {
+        if(m_PlayerAbilityState.abilityActive == PlayerAbilityState.AbilityActive.notActive)
+        {
+            InputSpeed = Orispeed;
+        }
+
+        else if(m_PlayerAbilityState.abilityActive == PlayerAbilityState.AbilityActive.isActive)
+        {
+            InputSpeed = NewSpeed;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Points")
+        {
+            Points.m_Score += 10;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.tag == "Coffee")
+        {
+            m_Coffee.coffee += 25;
+            Destroy(collision.gameObject);
+        }
+    }
     public void RespawnLocation()
     {
         transform.position = startSpawn;
@@ -234,6 +273,7 @@ public class Player : MonoBehaviour
         PlayerMove();
         PlayerJump();
         OptionKey();
+        CheckSpeed();
         Debug.Log(InputSpeed);
 
         if (currentHealth == 0)
